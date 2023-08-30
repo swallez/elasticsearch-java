@@ -21,7 +21,8 @@ package co.elastic.clients.elasticsearch.end_to_end;
 
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.ElasticsearchTestServer;
+import co.elastic.clients.test_fixtures.AppData;
+import co.elastic.clients.test_fixtures.ElasticsearchTestServer;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch._types.Refresh;
 import co.elastic.clients.elasticsearch._types.aggregations.HistogramAggregate;
@@ -43,6 +44,7 @@ import co.elastic.clients.elasticsearch.indices.GetIndicesSettingsResponse;
 import co.elastic.clients.elasticsearch.indices.GetMappingResponse;
 import co.elastic.clients.elasticsearch.indices.IndexState;
 import co.elastic.clients.elasticsearch.model.ModelTestCase;
+import co.elastic.clients.test_fixtures.Product;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import co.elastic.clients.util.BinaryData;
 import co.elastic.clients.util.ContentType;
@@ -248,8 +250,8 @@ public class RequestTest extends Assertions {
         TypeReference<Map<String, AppData>> typeRef = new TypeReference<Map<String, AppData>>() {};
 
         Map<String, AppData> result = client.<Map<String, AppData>>get(g -> g.index(index).id(id), typeRef.getType()).source();
-        assertEquals(1, result.get("foo").intValue);
-        assertEquals(2, result.get("bar").intValue);
+        assertEquals(1, result.get("foo").getIntValue());
+        assertEquals(2, result.get("bar").getIntValue());
 
     }
 
@@ -300,7 +302,7 @@ public class RequestTest extends Assertions {
         assertEquals(1L, bulk.items().get(0).version().longValue());
         assertEquals("foo", bulk.items().get(1).index());
         assertEquals(1L, bulk.items().get(1).version().longValue());
-        assertEquals(42, client.get(b -> b.index("foo").id("gh"), AppData.class).source().intValue);
+        assertEquals(42, client.get(b -> b.index("foo").id("gh"), AppData.class).source().getIntValue());
     }
 
     @Test
@@ -454,41 +456,4 @@ public class RequestTest extends Assertions {
         assertNotNull(resp.valueBody().toJson().asJsonObject().get("_shards"));
     }
 
-    public static class AppData {
-        private int intValue;
-        private String msg;
-
-        public int getIntValue() {
-            return intValue;
-        }
-
-        public void setIntValue(int intValue) {
-            this.intValue = intValue;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-    }
-
-    public static class Product {
-        public double price;
-
-        public Product() {}
-        public Product(double price) {
-            this.price = price;
-        }
-
-        public double getPrice() {
-            return this.price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
-        }
-    }
 }

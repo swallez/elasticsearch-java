@@ -133,7 +133,7 @@ public abstract class ModelTestCase extends Assertions {
 
     @SuppressWarnings("unchecked")
     protected <T> T checkJsonRoundtrip(T value, String expectedJson) {
-        assertEquals(expectedJson, toJson(value));
+        Assertions.assertEquals(expectedJson, toJson(value));
         return fromJson(expectedJson, (Class<T>)value.getClass());
     }
 
@@ -152,10 +152,10 @@ public abstract class ModelTestCase extends Assertions {
         try {
             method = clazz.getMethod(name);
         } catch (NoSuchMethodException e) {
-            fail("Getter '" + clazz.getName() + "." + name + "' doesn't exist");
+            Assertions.fail("Getter '" + clazz.getName() + "." + name + "' doesn't exist");
             return;
         }
 
-        assertSame(expected, method.getReturnType());
+        Assertions.assertSame(expected, method.getReturnType());
     }
 }

@@ -21,8 +21,6 @@ package co.elastic.clients.documentation.usage;
 
 import co.elastic.clients.documentation.DocTestsTransport;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch._helpers.bulk.BulkIngester;
-import co.elastic.clients.elasticsearch._helpers.bulk.BulkListener;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
@@ -121,7 +119,7 @@ public class IndexingBulkTest extends ModelTestCase {
         }
         //end::bulk-json
     }
-
+/*
     @Test
     public void useBulkIndexer() throws Exception {
 
@@ -210,4 +208,6 @@ public class IndexingBulkTest extends ModelTestCase {
         //end::bulk-ingester-context
 
     }
+
+ */
 }

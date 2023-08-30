@@ -60,8 +60,8 @@ tasks.register<Task>(name = "publishForReleaseManager") {
     group = "Publishing"
     description = "Publishes artifacts in a format suitable for the Elastic release manager"
     dependsOn(
-        ":java-client:publishAllPublicationsToBuildRepository",
-        ":java-client:generateLicenseReport"
+        ":java-client:release:publishAllPublicationsToBuildRepository",
+        ":java-client:release:generateLicenseReport"
     )
     doLast {
         val version = this.project.version.toString()

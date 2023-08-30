@@ -20,7 +20,7 @@
 # Build a Docker image that has Gradle and all project dependencies ready.
 # Needs to be run with .git and java-client/src mounted under /elasticsearch-java.
 
-FROM openjdk:17
+FROM openjdk:17-slim
 
 # Default UID/GID to 1000
 # it can be overridden at build time
@@ -29,7 +29,7 @@ ARG BUILDER_GID=1000
 
 # Create group and user if needed
 RUN (getent group ${BUILDER_GID} || groupadd -g ${BUILDER_GID} elastic) \
-    && (getent passwd ${BUILDER_UID} || useradd -u ${BUILDER_UID} -g ${BUILDER_GID} elastic) \
+    && (getent passwd ${BUILDER_UID} || useradd -m -u ${BUILDER_UID} -g ${BUILDER_GID} elastic) \
     && mkdir -p /elasticsearch-java/build \
     && chown -R ${BUILDER_UID}:${BUILDER_GID} /elasticsearch-java
 
@@ -48,6 +48,9 @@ COPY --chown=$BUILDER_UID:$BUILDER_GID build.gradle.kts settings.gradle.kts ./
 COPY --chown=$BUILDER_UID:$BUILDER_GID buildSrc ./buildSrc/
 COPY --chown=$BUILDER_UID:$BUILDER_GID config ./config/
 COPY --chown=$BUILDER_UID:$BUILDER_GID java-client/build.gradle.kts ./java-client/
+COPY --chown=$BUILDER_UID:$BUILDER_GID java-client/release/build.gradle.kts ./java-client/release/
+COPY --chown=$BUILDER_UID:$BUILDER_GID shared-framework/build.gradle.kts ./shared-framework/
+COPY --chown=$BUILDER_UID:$BUILDER_GID shared-helpers/build.gradle.kts ./shared-helpers/
 RUN ./gradlew resolveDependencies
 
 # Build artifacts. Expects these mounted directories:

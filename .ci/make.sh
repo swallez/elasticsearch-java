@@ -132,7 +132,11 @@ esac
 
 docker_image=${product}-build-$(echo "$VERSION" | tr '[:upper:]' '[:lower:]')
 git_mount="-v $repo/.git:/elasticsearch-java/.git:ro"
-src_mount="-v $repo/java-client/src:/elasticsearch-java/java-client/src:ro"
+src_mount="\
+  -v $repo/java-client/src:/elasticsearch-java/java-client/src:ro \
+  -v $repo/shared-framework/src:/elasticsearch-java/shared-framework/src:ro \
+  -v $repo/shared-helpers/src:/elasticsearch-java/shared-helpers/src:ro \
+"
 output_mount="-v $repo/.ci/output:/elasticsearch-java/build"
 
 build_image() {

@@ -20,12 +20,19 @@
 rootProject.name = "elasticsearch-java"
 
 // Include as subprojects all subdirectories that have a "build.gradle.kts" and no ".gradle-standalone"
-(rootProject.projectDir.listFiles() ?: arrayOf<File>()).
-    filter { File(it, "build.gradle.kts").exists() }.
-    filter { !File(it, ".gradle-standalone").exists() }.
-    filter { it.name != "buildSrc" }.
-    toTypedArray().
-    forEach { dir ->
-        include(dir.name)
-        project(":" + dir.name).projectDir = dir
-    }
+findSubProjects(rootProject.projectDir, "", "")
+
+fun findSubProjects(parentDir: File, parentName: String, sep: String) {
+    (parentDir.listFiles() ?: arrayOf<File>()).
+        filter { it.name != "buildSrc" }.
+        forEach { dir ->
+            if (File(dir, "build.gradle.kts").exists()) {
+                if (!File(dir, ".gradle-standalone").exists()) {
+                    val childName = parentName + sep + dir.name
+                    //println("Adding project '$childName' at $dir")
+                    include(childName)
+                    findSubProjects(dir, childName, ":")
+                }
+            }
+        }
+}

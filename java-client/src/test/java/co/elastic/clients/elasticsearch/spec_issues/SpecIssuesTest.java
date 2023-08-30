@@ -21,7 +21,7 @@ package co.elastic.clients.elasticsearch.spec_issues;
 
 import co.elastic.clients.documentation.usage.Product;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.ElasticsearchTestServer;
+import co.elastic.clients.test_fixtures.ElasticsearchTestServer;
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.Script;
 import co.elastic.clients.elasticsearch._types.analysis.LimitTokenCountTokenFilter;

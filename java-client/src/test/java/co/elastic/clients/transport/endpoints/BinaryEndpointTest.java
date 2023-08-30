@@ -20,7 +20,7 @@
 package co.elastic.clients.transport.endpoints;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.ElasticsearchTestServer;
+import co.elastic.clients.test_fixtures.ElasticsearchTestServer;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.json.SimpleJsonpMapper;
 import co.elastic.clients.transport.TransportOptions;

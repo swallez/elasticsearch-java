@@ -20,7 +20,7 @@
 package co.elastic.clients.transport;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.ElasticsearchTestServer;
+import co.elastic.clients.test_fixtures.ElasticsearchTestServer;
 import co.elastic.clients.json.SimpleJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import org.apache.http.HttpHost;
